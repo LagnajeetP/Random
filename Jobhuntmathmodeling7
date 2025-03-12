@@ -1,0 +1,37 @@
+import numpy as np
+from numpy import random 
+
+def select_candidate(scores):
+    
+    max_first7 = None
+    selected_index = None
+    
+    
+    for i in range(7):
+        if scores[i] > 90:
+            
+            print(f"Candidate at index {i} selected immediately with score {scores[i]} (>90).")
+            return i, scores[i]
+        if max_first7 is None or scores[i] > max_first7:
+            max_first7 = scores[i]
+    
+    
+    for i in range(7, 21):
+        if scores[i] > max_first7:
+            print(f"Candidate at index {i} selected as first candidate exceeding max of first 7 ({max_first7}).")
+            return i, scores[i]
+    
+    
+    print(f"No candidate in positions 8-21 exceeded the max score of the first 7 ({max_first7}). " \
+          f"Selecting the last candidate at index 20 with score {scores[-1]}.")
+    return 20, scores[-1]
+
+
+import random
+
+
+sample_scores = [random.randint(0, 100) for _ in range(21)]
+print("Candidate scores:", sample_scores)
+
+selected_index, selected_score = select_candidate(sample_scores)
+print(f"Selected candidate at index {selected_index} with score {selected_score}")
